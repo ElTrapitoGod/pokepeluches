@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PeluPoké · Mi cuenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dashboard-body">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="ball"></span>
+      <span class="brand-name">PeluPoké</span>
+    </div>
+    <button id="logout-btn" class="ghost-btn">Cerrar sesión</button>
+  </header>
+
+  <main class="dashboard">
+    <h1 id="welcome">Cargando tu cuenta…</h1>
+    <p class="subtitle">Este es tu avance de login funcionando con Supabase. Aquí seguirá creciendo la tienda.</p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script>
+    async function checkSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        window.location.href = "index.html";
+        return;
+      }
+      const name = session.user.user_metadata?.full_name || session.user.email;
+      document.getElementById("welcome").textContent = `¡Bienvenido, ${name}!`;
+    }
+
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      await supabaseClient.auth.signOut();
+      window.location.href = "index.html";
+    });
+
+    checkSession();
+  </script>
+</body>
+</html>

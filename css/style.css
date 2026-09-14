@@ -1,0 +1,244 @@
+:root {
+  --cream: #FFF6E9;
+  --ink: #2B2621;
+  --red: #E4572E;
+  --red-dark: #C7431E;
+  --yellow: #F5B935;
+  --sage: #6E9B7B;
+  --line: rgba(43, 38, 33, 0.12);
+  --radius: 18px;
+  --font-display: 'Baloo 2', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+/* ---- Layout general de login/registro ---- */
+.page {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 860px) {
+  .page { grid-template-columns: 1fr; }
+  .hero { min-height: 320px; }
+}
+
+/* ---- Panel izquierdo: hero de marca ---- */
+.hero {
+  background: linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  padding: 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content { max-width: 420px; position: relative; z-index: 2; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.ball {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--cream) 0 50%, var(--ink) 50% 100%);
+  border: 2px solid var(--ink);
+  position: relative;
+  flex-shrink: 0;
+}
+.ball::after {
+  content: "";
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.2px;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.hero p {
+  font-size: 1.02rem;
+  line-height: 1.5;
+  opacity: 0.92;
+  margin-bottom: 44px;
+}
+
+/* Trío de "peluches" abstractos, sin usar personajes con derechos */
+.stack { display: flex; gap: 18px; }
+
+.plush {
+  width: 74px;
+  height: 74px;
+  border-radius: 50% 50% 46% 46% / 55% 55% 45% 45%;
+  position: relative;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+.plush::before, .plush::after {
+  content: "";
+  position: absolute;
+  width: 20px; height: 26px;
+  background: inherit;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  top: -12px;
+}
+.plush::before { left: 6px; transform: rotate(-18deg); }
+.plush::after  { right: 6px; transform: rotate(18deg); }
+
+.plush-a { background: var(--yellow); }
+.plush-b { background: var(--cream); margin-top: 22px; }
+.plush-c { background: var(--sage); }
+
+/* ---- Panel derecho: formulario ---- */
+.form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.form-card h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: rgba(43,38,33,0.62);
+  margin: 0 0 28px 0;
+  font-size: 0.95rem;
+}
+
+form { display: flex; flex-direction: column; }
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+label:first-of-type { margin-top: 0; }
+
+input {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+input:focus {
+  border-color: var(--red);
+}
+
+button {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background: var(--red);
+  border: none;
+  border-radius: 12px;
+  padding: 13px;
+  margin-top: 26px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+button:hover { background: var(--red-dark); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.message {
+  min-height: 20px;
+  font-size: 0.88rem;
+  margin: 14px 0 0 0;
+}
+.message.error { color: var(--red-dark); }
+.message.success { color: var(--sage); }
+
+.switch {
+  text-align: center;
+  margin-top: 26px;
+  font-size: 0.9rem;
+  color: rgba(43,38,33,0.7);
+}
+.switch a { color: var(--red); font-weight: 600; text-decoration: none; }
+.switch a:hover { text-decoration: underline; }
+
+/* ---- Dashboard (home.html) ---- */
+.dashboard-body { min-height: 100vh; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1.5px solid var(--line);
+}
+
+.ghost-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 16px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.ghost-btn:hover { border-color: var(--red); color: var(--red); }
+
+.dashboard {
+  max-width: 640px;
+  margin: 80px auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.dashboard h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
