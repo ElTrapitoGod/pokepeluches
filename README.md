@@ -1,4 +1,4 @@
-# PeluPoké — Avance de proyecto (Login)
+# PeluPoké — Avance de proyecto 
 
 Tienda de peluches coleccionables. Este avance incluye el login y registro funcionando con Supabase Auth.
 
@@ -6,13 +6,13 @@ Tienda de peluches coleccionables. Este avance incluye el login y registro funci
 
 ```
 pokepeluches/
-├── index.html        → Página de login
-├── register.html     → Página de registro
-├── home.html          → Página protegida tras iniciar sesión
+├── index.html        → login
+├── register.html     → registro/Crear cuenta
+├── home.html          → Home/Pagina principal
 ├── css/style.css
 └── js/
-    ├── supabaseClient.js  → Configuración de conexión a Supabase
-    └── auth.js             → Lógica de login/registro
+    ├── supabaseClient.js  → conexión a Supabase
+    └── auth.js             → Lógica y pogramacion del login/registro
 ```
 
 ```bash

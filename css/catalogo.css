@@ -1,0 +1,288 @@
+/* Estilos del catálogo. Usa las variables de style.css (--red, --ink, etc.) */
+
+.dashboard {
+  max-width: 1040px;
+  margin: 56px auto 80px;
+  padding: 0 24px;
+  text-align: left;
+}
+
+.dashboard .intro h1 {
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.seccion-titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 44px 0 20px;
+  border-bottom: 1.5px solid var(--line);
+  padding-bottom: 10px;
+}
+.seccion-titulo h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.seccion-titulo span {
+  font-size: 0.85rem;
+  color: rgba(43, 38, 33, 0.55);
+}
+
+.catalogo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.producto-card {
+  background: white;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.producto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(43, 38, 33, 0.12);
+}
+
+.producto-visual {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.producto-visual svg {
+  width: 138px;
+  height: 138px;
+  filter: drop-shadow(0 8px 10px rgba(43, 38, 33, 0.16));
+}
+
+.producto-info {
+  padding: 18px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.producto-tipo {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--red-dark);
+  background: rgba(228, 87, 46, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.producto-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 4px 0 0;
+}
+
+.producto-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: rgba(43, 38, 33, 0.7);
+  flex: 1;
+}
+
+.producto-precio {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+/* ============================================================
+   Interacción en tarjetas (abren el detalle)
+   ============================================================ */
+.producto-card { cursor: pointer; }
+.producto-card:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+.producto-pie {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.producto-pie .producto-precio { margin-top: 0; }
+
+.producto-ver {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--red);
+  transition: transform 0.18s ease;
+}
+.producto-card:hover .producto-ver { transform: translateX(3px); }
+
+/* ============================================================
+   Ventana de detalle (modal)
+   ============================================================ */
+body.modal-abierto { overflow: hidden; }
+
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(43, 38, 33, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fondo-entra 0.18s ease;
+}
+.modal-fondo[hidden] { display: none; }
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--cream);
+  border-radius: 22px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  animation: modal-entra 0.22s ease;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: white;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.modal-cerrar:hover { background: var(--ink); color: white; }
+.modal-cerrar:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+
+.modal-contenido {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.detalle-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  min-height: 280px;
+}
+.detalle-visual svg {
+  width: 210px;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 14px rgba(43, 38, 33, 0.2));
+}
+
+.detalle-cuerpo {
+  padding: 32px 34px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.detalle-cuerpo h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 6px 0 0;
+}
+.detalle-precio {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--red-dark);
+}
+.detalle-descripcion {
+  margin: 8px 0 4px;
+  line-height: 1.55;
+  color: rgba(43, 38, 33, 0.8);
+}
+.detalle-cuerpo h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 18px 0 6px;
+}
+.detalle-cuerpo p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(43, 38, 33, 0.78);
+}
+
+.detalle-medidas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+.detalle-medidas li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  font-size: 0.9rem;
+}
+.detalle-medidas li + li { border-top: 1px solid var(--line); }
+.detalle-medidas span { color: rgba(43, 38, 33, 0.65); }
+.detalle-medidas strong { text-align: right; font-weight: 600; }
+
+.detalle-usos {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(43, 38, 33, 0.78);
+}
+
+.detalle-extra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@keyframes fondo-entra { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-entra {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-fondo, .modal { animation: none; }
+  .producto-card, .producto-ver { transition: none; }
+}
+
+/* Celulares: el modal se apila en una sola columna */
+@media (max-width: 720px) {
+  .modal-fondo { padding: 12px; }
+  .modal-contenido { grid-template-columns: 1fr; }
+  .detalle-visual { min-height: 200px; padding: 32px 24px; }
+  .detalle-visual svg { width: 150px; }
+  .detalle-cuerpo { padding: 24px 22px 28px; }
+  .detalle-extra { grid-template-columns: 1fr; gap: 0; }
+}

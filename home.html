@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PeluPoké · Mi cuenta</title>
+  <title>PeluPoké · Tienda</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/catalogo.css" />
 </head>
 <body class="dashboard-body">
 
@@ -19,13 +20,24 @@
   </header>
 
   <main class="dashboard">
-    <h1 id="welcome">Cargando tu cuenta…</h1>
-    <p class="subtitle">Este es tu avance de login funcionando con Supabase. Aquí seguirá creciendo la tienda.</p>
+    <section class="intro">
+      <h1 id="welcome">Cargando tu cuenta…</h1>
+      <p class="subtitle">Elige a tu próximo compañero de aventuras.</p>
+    </section>
+
+    <div class="seccion-titulo">
+      <h2>Catálogo</h2>
+      <span>3 artículos disponibles</span>
+    </div>
+
+    <section id="catalogo" class="catalogo-grid"></section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
+  <script src="js/productos.js"></script>
   <script>
+    // Protege la página: si no hay sesión, regresa al login
     async function checkSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (!session) {
@@ -33,7 +45,10 @@
         return;
       }
       const name = session.user.user_metadata?.full_name || session.user.email;
-      document.getElementById("welcome").textContent = `¡Bienvenido, ${name}!`;
+      document.getElementById("welcome").textContent = `¡Hola, ${name}!`;
+
+      // Con sesión válida, dibuja el catálogo
+      catalogo.mostrarEn(document.getElementById("catalogo"));
     }
 
     document.getElementById("logout-btn").addEventListener("click", async () => {
