@@ -3,10 +3,16 @@
 //  Representa UN artículo de la tienda. Guarda sus datos y sabe
 //  cómo darse formato a sí mismo (por ejemplo, el precio).
 // ============================================================
+// Convierte un número en texto de precio: 349 -> "$349 MXN"
+function formatearPrecio(n) {
+  return `$${n.toLocaleString("es-MX")} MXN`;
+}
+
 class Producto {
-  constructor({ id, nombre, tipo, precio, descripcion, color, fondo, detalles }) {
+  constructor({ id, nombre, tipo, categoria, precio, descripcion, color, fondo, detalles }) {
     this.id = id;
     this.nombre = nombre;
+    this.categoria = categoria;     // id de la categoría: "peluches", "accesorios"...
     this.tipo = tipo;               // "peluche", "llavero" o "mochila"
     this.precio = precio;           // número, en pesos
     this.descripcion = descripcion; // texto corto para la tarjeta
@@ -17,7 +23,7 @@ class Producto {
 
   // Devuelve el precio como texto: 349 -> "$349 MXN"
   get precioFormateado() {
-    return `$${this.precio.toLocaleString("es-MX")} MXN`;
+    return formatearPrecio(this.precio);
   }
 
   // Devuelve un dibujo SVG sencillo según el tipo de producto.
@@ -73,6 +79,8 @@ class Catalogo {
     this.productos = [];
     this.modal = null;              // se crea la primera vez que se necesita
     this.ultimoElementoActivo = null; // para devolver el foco al cerrar
+    this.alAgregar = null;          // función que recibe el carrito (la pone tienda.js)
+    this.alVerCarrito = null;
   }
 
   agregar(producto) {
@@ -115,9 +123,20 @@ class Catalogo {
   }
 
   // Dibuja todas las tarjetas dentro del contenedor indicado
-  mostrarEn(contenedor) {
+  mostrarEn(contenedor, lista = this.productos) {
     contenedor.innerHTML = "";
-    this.productos.forEach((p) => contenedor.appendChild(this.crearTarjeta(p)));
+    lista.forEach((p) => contenedor.appendChild(this.crearTarjeta(p)));
+  }
+
+  // Devuelve solo los productos que coinciden con el texto y la categoría
+  filtrar(texto = "", categoria = "todas") {
+    const limpiar = (t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const buscado = limpiar(texto.trim());
+    return this.productos.filter((p) => {
+      const coincideCategoria = categoria === "todas" || p.categoria === categoria;
+      const textoProducto = limpiar(`${p.nombre} ${p.descripcion} ${p.tipo} ${p.categoria}`);
+      return coincideCategoria && textoProducto.includes(buscado);
+    });
   }
 
   // ---------- Ventana de detalle (modal) ----------
@@ -181,8 +200,26 @@ class Catalogo {
           <div><h4>Viene con</h4><p>${d.incluye}</p></div>
           <div><h4>Dato curioso</h4><p>${d.curiosidad}</p></div>
         </div>
+
+        <button class="detalle-agregar" type="button">Agregar al carrito</button>
+        <p class="detalle-estado" role="status"></p>
       </div>
     `;
+
+    // Botón "Agregar al carrito": avisa a tienda.js, que es quien tiene el carrito
+    const boton = this.modal.querySelector(".detalle-agregar");
+    const estado = this.modal.querySelector(".detalle-estado");
+    boton.addEventListener("click", () => {
+      if (!this.alAgregar) return;
+      const cantidad = this.alAgregar(producto);
+      boton.textContent = "✓ Agregado";
+      setTimeout(() => (boton.textContent = "Agregar al carrito"), 1600);
+      estado.innerHTML = `Tienes ${cantidad} en tu carrito · <button type="button" class="enlace">Ver carrito</button>`;
+      estado.querySelector(".enlace").addEventListener("click", () => {
+        this.cerrarDetalle();
+        if (this.alVerCarrito) this.alVerCarrito();
+      });
+    });
 
     this.modal.hidden = false;
     document.body.classList.add("modal-abierto");   // bloquea el scroll del fondo
@@ -210,6 +247,7 @@ catalogo.agregar(new Producto({
   id: 1,
   nombre: "Peluche de Pikachu",
   tipo: "peluche",
+  categoria: "peluches",
   precio: 349,
   descripcion: "Suave, rechoncho y listo para dormir contigo. Mide unos 30 cm.",
   color: "#F5B935",
@@ -244,6 +282,7 @@ catalogo.agregar(new Producto({
   id: 2,
   nombre: "Llavero de Fennekin",
   tipo: "llavero",
+  categoria: "accesorios",
   precio: 119,
   descripcion: "Pequeño compañero para tus llaves o tu mochila, con orejas enormes.",
   color: "#E88A3C",
@@ -277,6 +316,7 @@ catalogo.agregar(new Producto({
   id: 3,
   nombre: "Mochila de Greninja",
   tipo: "mochila",
+  categoria: "accesorios",
   precio: 599,
   descripcion: "Mochila escolar resistente con bolsa frontal y tirantes acolchados.",
   color: "#3F6FB5",

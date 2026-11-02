@@ -62,7 +62,6 @@ if (registerForm) {
       return;
     }
 
-    // no se si agregar que pida confirmacion, tal vez en un futuro
     if (data.session) {
       window.location.href = "home.html";
     } else {

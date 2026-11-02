@@ -1,0 +1,15 @@
+/* Identidad FenneStore: se carga DESPUÉS de style.css y reemplaza sus colores */
+:root {
+  --cream: #FFF8E9; --orange: #F28C28; --yellow: #FFD166; --coral: #E85D3F;
+  --red: #C8442A; --red-dark: #A93820;      /* coral oscuro: botones con texto blanco legible */
+  --ink: #2B2621; --sage: #3F7A52;
+}
+.brand { text-decoration: none; color: inherit; margin-bottom: 0; }
+.hero .brand { margin-bottom: 40px; }
+.brand-logo { width: 36px; height: 36px; display: block; flex-shrink: 0; }
+.brand-name span { color: var(--coral); }
+.hero .brand-name span { color: var(--red); }
+.hero { background: linear-gradient(160deg, var(--orange) 0%, var(--yellow) 100%); color: var(--ink); }
+.plush-a { background: var(--coral); } .plush-b { background: var(--cream); } .plush-c { background: var(--red); }
+.back-link { display: block; text-align: center; margin-top: 14px; font-size: .85rem; color: rgba(43,38,33,.6); text-decoration: none; }
+.back-link:hover { color: var(--red); }

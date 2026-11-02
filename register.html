@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PeluPoké · Crear cuenta</title>
+  <title>FenneStore · Crear cuenta</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/marca.css" />
 </head>
 <body>
 
@@ -14,10 +16,7 @@
 
     <aside class="hero">
       <div class="hero-content">
-        <div class="brand">
-          <span class="ball"></span>
-          <span class="brand-name">PeluPoké</span>
-        </div>
+        <a class="brand" href="index.html"><img class="brand-logo" data-img="logo" alt="" width="36" height="36"><span class="brand-name">Fenne<span>Store</span></span></a>
         <h1>Tu primera captura<br>empieza aquí.</h1>
         <p>Crea tu cuenta de entrenador y desbloquea la tienda completa.</p>
 
@@ -48,8 +47,8 @@
 
           <p id="form-message" class="message" role="status"></p>
         </form>
-
-        <p class="switch">¿Ya tienes cuenta? <a href="index.html">Inicia sesión</a></p>
+        <p class="switch">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+        <a class="back-link" href="index.html">← Volver al inicio</a>
       </div>
     </main>
 
@@ -57,6 +56,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
+  <script src="js/imagenes.js"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>
