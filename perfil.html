@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FenneStore · Mi perfil</title><link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/marca.css"><link rel="stylesheet" href="css/inicio.css"><link rel="stylesheet" href="css/catalogo.css"></head>
+<body class="inicio">
+<header class="site-header"><div class="wrap"><a class="brand" href="index.html"><img class="brand-logo" data-img="logo" alt="" width="36" height="36"><span class="brand-name">Fenne<span>Store</span></span></a><a class="btn btn-ghost btn-sm" href="home.html">← Volver a la tienda</a></div></header>
+<main class="profile-wrap"><section class="profile-card"><span class="eyebrow">Tu cuenta</span><h1>Mi perfil</h1><p class="subtitle">Mantén tus datos actualizados para tu próxima aventura.</p>
+<form id="profile-form" class="profile-form">
+<label for="email-profile">Correo electrónico</label><input id="email-profile" type="email" disabled>
+<label for="full_name">Nombre completo</label><input id="full_name" required maxlength="120">
+<label for="phone">Teléfono</label><input id="phone" type="tel">
+<h2>Dirección</h2>
+<label for="street">Calle</label><input id="street">
+<label for="street_number">Número</label><input id="street_number">
+<label for="neighborhood">Colonia</label><input id="neighborhood">
+<label for="postal_code">Código postal</label><input id="postal_code">
+<label for="city">Ciudad</label><input id="city">
+<label for="state">Estado</label><input id="state">
+<label for="country">País</label><input id="country">
+<label for="description">Sobre mí</label><textarea id="description" rows="3" maxlength="500"></textarea>
+<button id="save-profile" type="submit">Guardar cambios</button><p id="profile-message" class="message" role="status"></p>
+</form></section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabaseClient.js"></script><script src="js/imagenes.js"></script>
+<script>
+(async()=>{
+ const {data:{session}}=await supabaseClient.auth.getSession();if(!session){location.replace("login.html");return;}
+ const fields=["full_name","phone","street","street_number","neighborhood","postal_code","city","state","country","description"];
+ const form=document.getElementById("profile-form"),msg=document.getElementById("profile-message"),btn=document.getElementById("save-profile");
+ document.getElementById("email-profile").value=session.user.email||"";
+ const {data,error}=await supabaseClient.from("profiles").select(fields.join(",")).eq("id",session.user.id).single();
+ if(error){msg.textContent="No se pudo cargar tu perfil. "+error.message;msg.className="message error";return;}
+ fields.forEach(k=>document.getElementById(k).value=data[k]||"");
+ form.addEventListener("submit",async e=>{
+   e.preventDefault();btn.disabled=true;msg.textContent="Guardando…";msg.className="message";
+   const values=Object.fromEntries(fields.map(k=>[k,document.getElementById(k).value.trim()||null]));
+   const {error:saveError}=await supabaseClient.from("profiles").update(values).eq("id",session.user.id);
+   btn.disabled=false;
+   if(saveError){msg.textContent="No se pudieron guardar los cambios: "+saveError.message;msg.className="message error";}
+   else{msg.textContent="¡Perfil actualizado correctamente!";msg.className="message success";}
+ });
+})();
+</script></body></html>

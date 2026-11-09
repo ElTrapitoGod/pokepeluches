@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360">
+<rect width="480" height="360" rx="30" fill="#E8ECFA"/>
+<circle cx="240" cy="150" r="104" fill="#8C9FD0" opacity=".22"/>
+<path d="M160 135 L143 64 L205 111 M320 135 L337 64 L275 111" fill="#8C9FD0" stroke="#2B2621" stroke-opacity=".15" stroke-width="7" stroke-linejoin="round"/>
+<ellipse cx="240" cy="178" rx="92" ry="88" fill="#8C9FD0"/>
+<circle cx="208" cy="164" r="9" fill="#2B2621"/><circle cx="272" cy="164" r="9" fill="#2B2621"/>
+<path d="M222 197 Q240 215 258 197" fill="none" stroke="#2B2621" stroke-width="7" stroke-linecap="round"/>
+<circle cx="184" cy="193" r="13" fill="#E85D3F" opacity=".65"/><circle cx="296" cy="193" r="13" fill="#E85D3F" opacity=".65"/>
+<rect x="35" y="292" width="410" height="42" rx="21" fill="#fff" opacity=".88"/>
+<text x="240" y="320" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#2B2621">Figura de Diancie</text>
+</svg>
